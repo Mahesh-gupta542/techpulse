@@ -16,12 +16,21 @@
     padding: 0;
 }
 
+html {
+    height: 100%;
+    overflow: hidden;
+}
+
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
     font-family: var(--font-main);
-    overflow-x: hidden;
     line-height: 1.6;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .hidden {
@@ -35,6 +44,9 @@ header {
     align-items: center;
     border-bottom: 2px solid var(--primary-neon);
     box-shadow: 0 0 15px var(--primary-neon);
+    flex-shrink: 0;
+    z-index: 10;
+    background-color: var(--bg-color);
 }
 
 .logo-container {
@@ -66,13 +78,23 @@ nav a:hover {
 }
 
 main {
-    min-height: 80vh;
+    flex: 1;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
     padding: 2rem;
+    min-height: 0;
+    /* Important for flex scrolling */
+}
+
+#article-section {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+    /* Important for flex scrolling */
 }
 
 .hero-title {
@@ -105,6 +127,15 @@ main {
     background: var(--primary-neon);
     color: var(--bg-color);
     box-shadow: 0 0 20px var(--primary-neon);
+}
+
+.btn-enter:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    background: transparent;
+    color: var(--primary-neon);
+    box-shadow: none;
+    border-color: #555;
 }
 
 /* Article Styles */
@@ -160,4 +191,7 @@ footer {
     border-top: 1px solid #333;
     font-size: 0.8rem;
     color: #666;
+    flex-shrink: 0;
+    background-color: var(--bg-color);
+    z-index: 10;
 }

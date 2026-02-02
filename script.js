@@ -31,6 +31,57 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
+    // --- Article Pagination ---
+    const articles = document.querySelectorAll('#article-section .article-container');
+    const btnNext = document.getElementById('btn-next-article');
+    const btnPrev = document.getElementById('btn-prev-article');
+    let currentArticleIndex = 0;
+
+    function updateArticleDisplay() {
+        articles.forEach((article, index) => {
+            if (index === currentArticleIndex) {
+                article.style.display = 'block';
+            } else {
+                article.style.display = 'none';
+            }
+        });
+
+        // Update buttons
+        if (btnPrev) {
+            btnPrev.disabled = currentArticleIndex === 0;
+            btnPrev.style.visibility = 'visible'; // Ensure it's visible but disabled
+        }
+        if (btnNext) {
+            btnNext.disabled = currentArticleIndex === articles.length - 1;
+            btnNext.style.visibility = 'visible'; // Ensure it's visible but disabled
+        }
+
+        // Scroll to top of article section if needed, or just top of page
+        window.scrollTo(0, 0);
+    }
+
+    if (btnNext) {
+        btnNext.addEventListener('click', () => {
+            if (currentArticleIndex < articles.length - 1) {
+                currentArticleIndex++;
+                updateArticleDisplay();
+            }
+        });
+    }
+
+    if (btnPrev) {
+        btnPrev.addEventListener('click', () => {
+            if (currentArticleIndex > 0) {
+                currentArticleIndex--;
+                updateArticleDisplay();
+            }
+        });
+    }
+
+    // Initialize display
+    updateArticleDisplay();
+
     // --- Navigation Logic ---
     const heroSection = document.getElementById('hero-section');
     const articleSection = document.getElementById('article-section');
@@ -41,6 +92,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function showArticle() {
         heroSection.classList.add('hidden');
         articleSection.classList.remove('hidden');
+
+        // Reset to first article when entering
+        currentArticleIndex = 0;
+        updateArticleDisplay();
+
         window.scrollTo(0, 0);
     }
 
